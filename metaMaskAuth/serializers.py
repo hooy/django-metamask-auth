@@ -58,9 +58,11 @@ class WalletTokenObtainSerializer(serializers.Serializer):
     def get_token(cls, user):
         return cls.token_class.for_user(user)
 
+# Respect serializer class in settings
+token_serializer = api_settings.VALIDATION_SERIALIZER
 
 ## Same as TokaneObtainPairSerializer from simple-jwt but diffrent base class
-class TokenObtainPairSerializer(WalletTokenObtainSerializer):
+class TokenObtainPairSerializer(token_serializer):
     token_class = RefreshToken
 
     def validate(self, attrs):
